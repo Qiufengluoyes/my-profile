@@ -99,8 +99,20 @@ body > * {
   0% {
     background-position: 0 0, 30px 30px, 12px 12px;
   }
+  20% {
+    background-position: 80px 10px, -40px 120px, 120px -20px;
+  }
+  40% {
+    background-position: -30px 90px, 150px 0px, -90px 60px;
+  }
+  60% {
+    background-position: 40px -120px, -120px -30px, 20px 140px;
+  }
+  80% {
+    background-position: -140px -10px, 60px -140px, 160px 30px;
+  }
   100% {
-    background-position: 90px -60px, 120px 10px, -40px 110px;
+    background-position: 10px 150px, -160px 50px, -60px -130px;
   }
 }
 
@@ -108,8 +120,17 @@ body > * {
   0% {
     background-position: 0 0, 44px 22px;
   }
+  25% {
+    background-position: 110px -30px, -70px 90px;
+  }
+  50% {
+    background-position: -40px 140px, 130px 10px;
+  }
+  75% {
+    background-position: -150px -20px, 40px -130px;
+  }
   100% {
-    background-position: -140px 110px, -200px 70px;
+    background-position: 70px 170px, -170px 60px;
   }
 }
 
@@ -118,8 +139,20 @@ body > * {
     background-position: 0 0;
     opacity: 0.5;
   }
+  25% {
+    background-position: 160px 30px;
+    opacity: 0.6;
+  }
+  50% {
+    background-position: -40px -150px;
+    opacity: 0.55;
+  }
+  75% {
+    background-position: -180px 90px;
+    opacity: 0.55;
+  }
   100% {
-    background-position: 180px 140px;
+    background-position: 30px 190px;
     opacity: 0.5;
   }
 }
@@ -147,6 +180,7 @@ body > * {
       rgb(var(--card) / 0.96),
       rgb(var(--card-2) / 0.88)
     );
+    border-width: 1.5px;
     outline: 1px solid rgb(var(--accent) / 0.12);
     outline-offset: -1px;
   }
@@ -166,6 +200,7 @@ body > * {
       rgb(var(--card) / 0.82),
       rgb(var(--card-tint) / 0.82)
     );
+    border-width: 1.5px;
     outline: 1px solid rgb(var(--accent) / 0.1);
     outline-offset: -1px;
   }
@@ -185,6 +220,20 @@ body > * {
       rgb(var(--card) / 0.92),
       rgb(var(--card-2) / 0.82)
     );
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    --tw-backdrop-blur: blur(18px);
+  }
+
+  .card-muted {
+    --tw-backdrop-blur: blur(14px);
+  }
+
+  .card.card-overlay {
+    --tw-backdrop-blur: blur(22px);
   }
 }
 

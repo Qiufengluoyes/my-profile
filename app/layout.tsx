@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Noto_Sans_SC, Space_Grotesk } from "next/font/google";
 import { description, siteName, siteUrl } from "./site-data";
 import ScrollRestorer from "./components/ScrollRestorer";
+import BackgroundMotion from "./components/BackgroundMotion";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -74,6 +75,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" className={`${display.variable} ${body.variable}`}>
       <body className="min-h-screen bg-bg text-fg antialiased">
+        <BackgroundMotion />
         <ScrollRestorer />
         {children}
       </body>
