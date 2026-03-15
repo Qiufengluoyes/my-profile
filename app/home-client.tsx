@@ -42,7 +42,17 @@ const formatDate = (value: string) => {
   }).format(date);
 };
 
-const useRevealOnView = (amount = 0.01, margin = "0px 0px -2% 0px") => {
+type InViewMarginValue = `${number}${"px" | "%"}`;
+type InViewMargin =
+  | InViewMarginValue
+  | `${InViewMarginValue} ${InViewMarginValue}`
+  | `${InViewMarginValue} ${InViewMarginValue} ${InViewMarginValue}`
+  | `${InViewMarginValue} ${InViewMarginValue} ${InViewMarginValue} ${InViewMarginValue}`;
+
+const useRevealOnView = (
+  amount = 0.01,
+  margin: InViewMargin = "0px 0px 0px 0px"
+) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const inView = useInView(ref, { once: true, amount, margin });
   const [hasRevealed, setHasRevealed] = useState(false);
@@ -182,8 +192,8 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const itemVariant = motionEnabled
     ? createItem(entryYOffset, entryStiffness, entryDamping)
     : undefined;
-  const aboutReveal = useRevealOnView(0.2);
-  const articleReveal = useRevealOnView(0.2);
+  const aboutReveal = useRevealOnView();
+  const articleReveal = useRevealOnView();
   const [activeAbout, setActiveAbout] = useState<number | null>(null);
   const activeAboutDetail =
     activeAbout === null ? null : aboutDetails[activeAbout] ?? null;
