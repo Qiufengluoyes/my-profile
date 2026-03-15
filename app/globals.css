@@ -48,9 +48,9 @@ body {
   position: relative;
   background-color: rgb(var(--bg));
   background-image:
-    radial-gradient(circle, rgb(var(--accent) / 0.22) 1.6px, transparent 2.4px),
-    radial-gradient(circle, rgb(var(--accent-2) / 0.18) 1.6px, transparent 2.4px),
-    radial-gradient(circle, rgb(var(--accent-3) / 0.12) 2px, transparent 3px);
+    radial-gradient(circle, rgb(var(--accent) / 0.18) 1.4px, transparent 2.4px),
+    radial-gradient(circle, rgb(var(--accent-2) / 0.14) 1.6px, transparent 2.6px),
+    radial-gradient(circle, rgb(var(--accent-3) / 0.1) 2px, transparent 3.2px);
   background-size: 60px 60px, 120px 120px, 180px 180px;
   background-position: 0 0, 30px 30px, 12px 12px;
   background-repeat: repeat;
@@ -64,14 +64,15 @@ body::before {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle, rgb(var(--accent) / 0.3) 1.8px, transparent 2.6px),
-    radial-gradient(circle, rgb(var(--accent-3) / 0.26) 1.4px, transparent 2.4px);
-  background-size: 88px 88px, 150px 150px;
+    radial-gradient(circle, rgb(var(--accent) / 0.34) 2.2px, transparent 3.4px),
+    radial-gradient(circle, rgb(var(--accent-3) / 0.22) 1.6px, transparent 2.8px);
+  background-size: 96px 96px, 160px 160px;
   background-position: 0 0, 44px 22px;
   animation: dotWaveFloat 18s linear infinite alternate-reverse;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.85;
+  opacity: 0.9;
+  filter: blur(0.6px);
   will-change: background-position, opacity;
 }
 
@@ -80,11 +81,11 @@ body::after {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle, rgb(var(--accent-2) / 0.28) 2.4px, transparent 3.6px);
-  background-size: 170px 170px;
+    radial-gradient(circle, rgb(var(--accent-2) / 0.32) 3.2px, transparent 4.6px);
+  background-size: 190px 190px;
   background-position: 0 0;
-  filter: blur(2px);
-  opacity: 0.65;
+  filter: blur(2.8px);
+  opacity: 0.6;
   animation: dotWaveGlow 36s linear infinite alternate;
   z-index: 0;
   pointer-events: none;
@@ -224,6 +225,29 @@ body > * {
 }
 
 @media (max-width: 640px) {
+  body {
+    background-image:
+      radial-gradient(circle, rgb(var(--accent) / 0.14) 1.2px, transparent 2.4px),
+      radial-gradient(circle, rgb(var(--accent-2) / 0.1) 1.4px, transparent 2.6px);
+    background-size: 80px 80px, 160px 160px;
+    animation: none;
+  }
+
+  body::before,
+  body::after {
+    animation: none;
+  }
+
+  body::before {
+    opacity: 0.55;
+    filter: blur(0.4px);
+  }
+
+  body::after {
+    opacity: 0.4;
+    filter: blur(1.6px);
+  }
+
   .card {
     --tw-backdrop-blur: blur(18px);
   }
