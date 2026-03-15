@@ -32,35 +32,52 @@ const parseRgb = (value: string) => {
 
 const buildSvgDots = ({
   size,
-  step,
-  jitterRatio,
+  count,
+  minDistance,
   radiusMin,
   radiusMax,
   color,
   alpha
 }: {
   size: number;
-  step: number;
-  jitterRatio: number;
+  count: number;
+  minDistance: number;
   radiusMin: number;
   radiusMax: number;
   color: [number, number, number];
   alpha: number;
 }) => {
-  const jitter = step * jitterRatio;
   const circles: string[] = [];
-  const half = step / 2;
+  const points: Array<{ x: number; y: number; r: number }> = [];
+  const maxAttempts = Math.max(60, count * 40);
+  let attempts = 0;
 
-  for (let y = half; y < size; y += step) {
-    for (let x = half; x < size; x += step) {
-      const cx = clamp(x + randFloat(-jitter, jitter), 0, size);
-      const cy = clamp(y + randFloat(-jitter, jitter), 0, size);
-      const r = randFloat(radiusMin, radiusMax);
-      circles.push(
-        `<circle cx="${cx.toFixed(2)}" cy="${cy.toFixed(2)}" r="${r.toFixed(2)}" />`
-      );
+  while (points.length < count && attempts < maxAttempts) {
+    attempts += 1;
+    const cx = randFloat(0, size);
+    const cy = randFloat(0, size);
+    const r = randFloat(radiusMin, radiusMax);
+
+    let ok = true;
+    for (const p of points) {
+      const dx = cx - p.x;
+      const dy = cy - p.y;
+      if (dx * dx + dy * dy < minDistance * minDistance) {
+        ok = false;
+        break;
+      }
+    }
+
+    if (ok) {
+      points.push({ x: cx, y: cy, r });
     }
   }
+
+  points.forEach((p) => {
+    circles.push(
+      `<circle cx="${p.x.toFixed(2)}" cy="${p.y.toFixed(2)}" r="${p.r.toFixed(2)}" />`
+    );
+  });
 
   const [r, g, b] = color;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><g fill="rgb(${r}, ${g}, ${b})" fill-opacity="${alpha}">${circles.join("")}</g></svg>`;
@@ -173,8 +190,8 @@ export default function BackgroundMotion() {
         "--bg-dots-base-1",
         buildSvgDots({
           size: 72,
-          step: 30,
-          jitterRatio: 0.35,
+          count: 1,
+          minDistance: 36,
           radiusMin: 0.9,
           radiusMax: 1.3,
           color: accent,
@@ -185,8 +202,8 @@ export default function BackgroundMotion() {
         "--bg-dots-base-2",
         buildSvgDots({
           size: 150,
-          step: 58,
-          jitterRatio: 0.4,
+          count: 2,
+          minDistance: 70,
           radiusMin: 1.1,
           radiusMax: 1.6,
           color: accent2,
@@ -197,8 +214,8 @@ export default function BackgroundMotion() {
         "--bg-dots-base-3",
         buildSvgDots({
           size: 220,
-          step: 84,
-          jitterRatio: 0.45,
+          count: 3,
+          minDistance: 80,
           radiusMin: 1.4,
           radiusMax: 2.1,
           color: accent3,
@@ -225,8 +242,8 @@ export default function BackgroundMotion() {
         "--bg-dots-mid-1",
         buildSvgDots({
           size: 120,
-          step: 56,
-          jitterRatio: 0.35,
+          count: 2,
+          minDistance: 60,
           radiusMin: 1.8,
           radiusMax: 2.5,
           color: accent,
@@ -237,8 +254,8 @@ export default function BackgroundMotion() {
         "--bg-dots-mid-2",
         buildSvgDots({
           size: 190,
-          step: 88,
-          jitterRatio: 0.4,
+          count: 3,
+          minDistance: 70,
           radiusMin: 1.4,
           radiusMax: 2,
           color: accent3,
@@ -260,8 +277,8 @@ export default function BackgroundMotion() {
         "--bg-dots-glow-1",
         buildSvgDots({
           size: 240,
-          step: 120,
-          jitterRatio: 0.45,
+          count: 3,
+          minDistance: 90,
           radiusMin: 2.4,
           radiusMax: 3.2,
           color: accent2,

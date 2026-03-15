@@ -64,3 +64,76 @@ export const ogTags = aboutCards[0]?.tags ?? [
   "个人主页"
 ];
 
+
+export type ThemeTokens = {
+  bg: string;
+  fg: string;
+  muted: string;
+  card: string;
+  card2: string;
+  cardTint: string;
+  accent: string;
+  accent2: string;
+  accent3: string;
+  ring: string;
+  heroGap: string;
+  heroGapBottom: string;
+};
+
+export const theme = {
+  light: {
+    bg: "242 248 255",
+    fg: "15 23 42",
+    muted: "90 110 150",
+    card: "250 252 255",
+    card2: "236 244 255",
+    cardTint: "220 234 255",
+    accent: "91 167 255",
+    accent2: "134 197 255",
+    accent3: "199 217 255",
+    ring: "180 200 230",
+    heroGap: "clamp(20px, 5.5vh, 72px)",
+    heroGapBottom: "clamp(40px, 9vh, 140px)"
+  },
+  dark: {
+    bg: "8 12 24",
+    fg: "226 232 240",
+    muted: "160 180 210",
+    card: "16 24 40",
+    card2: "24 36 58",
+    cardTint: "30 48 80",
+    accent: "102 170 255",
+    accent2: "144 200 255",
+    accent3: "190 200 255",
+    ring: "54 75 110",
+    heroGap: "clamp(20px, 5.5vh, 72px)",
+    heroGapBottom: "clamp(40px, 9vh, 140px)"
+  }
+} as const satisfies Record<string, ThemeTokens>;
+
+const toCssVars = (tokens: ThemeTokens) => `
+  --bg: ${tokens.bg};
+  --fg: ${tokens.fg};
+  --muted: ${tokens.muted};
+  --card: ${tokens.card};
+  --card-2: ${tokens.card2};
+  --card-tint: ${tokens.cardTint};
+  --accent: ${tokens.accent};
+  --accent-2: ${tokens.accent2};
+  --accent-3: ${tokens.accent3};
+  --ring: ${tokens.ring};
+  --hero-gap: ${tokens.heroGap};
+  --hero-gap-bottom: ${tokens.heroGapBottom};
+`;
+
+export const themeCss = `
+:root {
+  color-scheme: light dark;
+  ${toCssVars(theme.light)}
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    ${toCssVars(theme.dark)}
+  }
+}
+`;

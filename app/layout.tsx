@@ -2,7 +2,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Noto_Sans_SC, Space_Grotesk } from "next/font/google";
-import { description, siteName, siteUrl } from "./site-data";
+import { description, siteName, siteUrl, themeCss } from "./site-data";
 import ScrollRestorer from "./components/ScrollRestorer";
 import BackgroundMotion from "./components/BackgroundMotion";
 
@@ -74,6 +74,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN" className={`${display.variable} ${body.variable}`}>
+      <head>
+        <style
+          id="theme-tokens"
+          dangerouslySetInnerHTML={{ __html: themeCss }}
+        />
+      </head>
       <body className="min-h-screen bg-bg text-fg antialiased">
         <div className="bg-layer" aria-hidden="true" />
         <BackgroundMotion />

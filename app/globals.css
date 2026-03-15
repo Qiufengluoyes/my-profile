@@ -2,42 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light dark;
-
-  /* ===============
-     个性化颜色设置
-     只需改这里即可
-     =============== */
-  --bg: 242 248 255;
-  --fg: 15 23 42;
-  --muted: 90 110 150;
-  --card: 250 252 255;
-  --card-2: 236 244 255;
-  --card-tint: 220 234 255;
-  --accent: 91 167 255;
-  --accent-2: 134 197 255;
-  --accent-3: 199 217 255;
-  --ring: 180 200 230;
-  --hero-gap: clamp(20px, 5.5vh, 72px);
-  --hero-gap-bottom: clamp(40px, 9vh, 140px);
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: 8 12 24;
-    --fg: 226 232 240;
-    --muted: 160 180 210;
-    --card: 16 24 40;
-    --card-2: 24 36 58;
-    --card-tint: 30 48 80;
-    --accent: 102 170 255;
-    --accent-2: 144 200 255;
-    --accent-3: 190 200 255;
-    --ring: 54 75 110;
-    --hero-gap: clamp(20px, 5.5vh, 72px);
-    --hero-gap-bottom: clamp(40px, 9vh, 140px);
-  }
-}
 
 * {
   box-sizing: border-box;
