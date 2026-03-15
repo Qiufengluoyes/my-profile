@@ -640,6 +640,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                     onClick={() => setActiveAbout(null)}
                     className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.35)] bg-[color:rgb(var(--accent)/0.12)] text-[color:rgb(var(--accent))] transition hover:bg-[color:rgb(var(--accent)/0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)]"
                     aria-label="关闭"
+                    style={{ borderWidth: "1.5px", borderRadius: "999px" }}
                   >
                     <svg
                       width="18"
@@ -652,7 +653,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                       <path
                         d="M6 6l12 12M18 6l-12 12"
                         stroke="currentColor"
-                        strokeWidth="1.5"
+                        strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
