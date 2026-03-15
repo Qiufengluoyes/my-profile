@@ -1,4 +1,4 @@
-export const siteName = "枫落丰源";
+export const siteName = "枫落丰源 Center";
 export const siteUrl = "https://www.feng1026.top";
 export const description = "和你的日常，就是奇迹";
 
@@ -60,8 +60,7 @@ export const aboutDetails = [
 ];
 
 export const ogTags = aboutCards[0]?.tags ?? [
-  "体验设计",
-  "前端工程",
-  "品牌表达"
+  "枫落丰源",
+  "个人主页"
 ];
 
