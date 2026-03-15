@@ -5,7 +5,7 @@ export const description = "和你的日常，就是奇迹";
 export const stats = [
   { label: "📔 身份", value: "学生 / Student" },
   { label: "📍 位置", value: "中国 / China" },
-  { label: "🏷️ 语言", value: "中文 / English" }
+  { label: "🏷️ 语言", value: "中文 / Chinese" }
 ];
 
 export const aboutCards = [
