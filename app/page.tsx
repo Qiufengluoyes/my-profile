@@ -274,7 +274,7 @@ export default function Home() {
                     </motion.div>
                   ))}
                 </div>
-                <div className="flex flex-wrap gap-3">
+                <div className="space-y-3">
                   <a href="https://blog.feng1026.top" className="chip">个人网站</a>
                 </div>
               </motion.div>
