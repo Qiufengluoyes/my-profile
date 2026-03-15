@@ -139,97 +139,33 @@ export default function BackgroundMotion() {
       const accent2 = parseRgb(rootStyles.getPropertyValue("--accent-2"));
       const accent3 = parseRgb(rootStyles.getPropertyValue("--accent-3"));
 
-      if (isMobile) {
-        layer.style.setProperty(
+      const clearVars = () => {
+        const vars = [
           "--bg-dots-base-1",
-          buildSvgDots({
-            size: 90,
-            step: 36,
-            jitterRatio: 0.4,
-            radiusMin: 1,
-            radiusMax: 1.4,
-            color: accent,
-            alpha: 0.14
-          })
-        );
-        layer.style.setProperty(
           "--bg-dots-base-2",
-          buildSvgDots({
-            size: 180,
-            step: 72,
-            jitterRatio: 0.45,
-            radiusMin: 1.2,
-            radiusMax: 1.6,
-            color: accent2,
-            alpha: 0.1
-          })
-        );
-        layer.style.setProperty("--bg-dots-base-3", "none");
-        layer.style.setProperty("--bg-dots-base-size-1", "90px 90px");
-        layer.style.setProperty("--bg-dots-base-size-2", "180px 180px");
-        layer.style.setProperty("--bg-dots-base-size-3", "0 0");
-        layer.style.setProperty(
+          "--bg-dots-base-3",
+          "--bg-dots-base-size-1",
+          "--bg-dots-base-size-2",
+          "--bg-dots-base-size-3",
           "--bg-dots-base-pos-1",
-          `${rand(-90, 90)}px ${rand(-90, 90)}px`
-        );
-        layer.style.setProperty(
           "--bg-dots-base-pos-2",
-          `${rand(-180, 180)}px ${rand(-180, 180)}px`
-        );
-        layer.style.setProperty("--bg-dots-base-pos-3", "0 0");
-
-        layer.style.setProperty(
+          "--bg-dots-base-pos-3",
           "--bg-dots-mid-1",
-          buildSvgDots({
-            size: 140,
-            step: 96,
-            jitterRatio: 0.4,
-            radiusMin: 1.6,
-            radiusMax: 2.2,
-            color: accent,
-            alpha: 0.26
-          })
-        );
-        layer.style.setProperty(
           "--bg-dots-mid-2",
-          buildSvgDots({
-            size: 200,
-            step: 120,
-            jitterRatio: 0.45,
-            radiusMin: 1.4,
-            radiusMax: 2,
-            color: accent3,
-            alpha: 0.2
-          })
-        );
-        layer.style.setProperty("--bg-dots-mid-size-1", "140px 140px");
-        layer.style.setProperty("--bg-dots-mid-size-2", "200px 200px");
-        layer.style.setProperty(
+          "--bg-dots-mid-size-1",
+          "--bg-dots-mid-size-2",
           "--bg-dots-mid-pos-1",
-          `${rand(-140, 140)}px ${rand(-140, 140)}px`
-        );
-        layer.style.setProperty(
           "--bg-dots-mid-pos-2",
-          `${rand(-200, 200)}px ${rand(-200, 200)}px`
-        );
-
-        layer.style.setProperty(
           "--bg-dots-glow-1",
-          buildSvgDots({
-            size: 240,
-            step: 144,
-            jitterRatio: 0.45,
-            radiusMin: 2.2,
-            radiusMax: 3,
-            color: accent2,
-            alpha: 0.26
-          })
-        );
-        layer.style.setProperty("--bg-dots-glow-size-1", "240px 240px");
-        layer.style.setProperty(
-          "--bg-dots-glow-pos-1",
-          `${rand(-240, 240)}px ${rand(-240, 240)}px`
-        );
+          "--bg-dots-glow-size-1",
+          "--bg-dots-glow-pos-1"
+        ];
+
+        vars.forEach((name) => layer.style.removeProperty(name));
+      };
+
+      if (isMobile) {
+        clearVars();
         return;
       }
 

@@ -6,7 +6,8 @@ import {
   LazyMotion,
   domAnimation,
   m,
-  useInView
+  useInView,
+  useReducedMotion
 } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import EmailProtect from "./components/EmailProtect";
@@ -65,21 +66,25 @@ function HoverCard({
   children,
   className = "",
   onClick,
-  ariaExpanded
+  ariaExpanded,
+  motionEnabled
 }: {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
   ariaExpanded?: boolean;
+  motionEnabled: boolean;
 }) {
   return (
     <m.button
       type="button"
       className={`card w-full cursor-pointer text-left transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.6)] ${className}`}
-      variants={item}
-      whileHover={{ y: -8 }}
-      whileTap={{ y: 3 }}
-      transition={{ type: "spring", stiffness: 260, damping: 18 }}
+      variants={motionEnabled ? item : undefined}
+      whileHover={motionEnabled ? { y: -8 } : undefined}
+      whileTap={motionEnabled ? { y: 3 } : undefined}
+      transition={
+        motionEnabled ? { type: "spring", stiffness: 260, damping: 18 } : undefined
+      }
       onClick={onClick}
       aria-haspopup="dialog"
       aria-expanded={ariaExpanded}
@@ -92,11 +97,13 @@ function HoverCard({
 function HoverCardLink({
   href,
   children,
-  className = ""
+  className = "",
+  motionEnabled
 }: {
   href: string;
   children: ReactNode;
   className?: string;
+  motionEnabled: boolean;
 }) {
   return (
     <m.a
@@ -104,10 +111,12 @@ function HoverCardLink({
       target="_blank"
       rel="noreferrer"
       className={`card block ${className}`}
-      variants={item}
-      whileHover={{ y: -8 }}
-      whileTap={{ y: 3 }}
-      transition={{ type: "spring", stiffness: 260, damping: 18 }}
+      variants={motionEnabled ? item : undefined}
+      whileHover={motionEnabled ? { y: -8 } : undefined}
+      whileTap={motionEnabled ? { y: 3 } : undefined}
+      transition={
+        motionEnabled ? { type: "spring", stiffness: 260, damping: 18 } : undefined
+      }
     >
       {children}
     </m.a>
@@ -123,6 +132,10 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const [loading, setLoading] = useState(initialArticles.length === 0);
   const lastHash = useRef("");
   const lastFetchedAt = useRef(0);
+  const prefersReducedMotion = useReducedMotion();
+  const motionEnabled = !prefersReducedMotion;
+  const containerVariant = motionEnabled ? container : undefined;
+  const itemVariant = motionEnabled ? item : undefined;
   const aboutReveal = useRevealOnView(0.3);
   const articleReveal = useRevealOnView(0.3);
   const [activeAbout, setActiveAbout] = useState<number | null>(null);
@@ -228,13 +241,13 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                 minHeight:
                   "calc(100svh - var(--hero-gap) - var(--hero-gap-bottom))"
               }}
-              variants={container}
-              initial="hidden"
+              variants={containerVariant}
+              initial={motionEnabled ? "hidden" : false}
               animate="show"
             >
               <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-10 md:flex-row md:items-center md:justify-center">
                 <m.div
-                  variants={item}
+                  variants={itemVariant}
                   className="flex items-center justify-center"
                 >
                   <div className="relative h-56 w-56 overflow-hidden rounded-full border border-[color:rgb(var(--accent)/0.5)] ring-1 ring-[color:rgb(var(--ring)/0.35)]">
@@ -251,7 +264,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                   </div>
                 </m.div>
                 <m.div
-                  variants={item}
+                  variants={itemVariant}
                   className="space-y-6 text-center md:text-left"
                 >
                   <div className="space-y-3">
@@ -267,7 +280,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                     {stats.map((stat) => (
                       <m.div
                         key={stat.label}
-                        variants={item}
+                        variants={itemVariant}
                         className="card-muted px-4 py-3"
                       >
                         <p className="text-xs uppercase tracking-wide text-muted">
@@ -289,9 +302,17 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
             </m.div>
             <m.div
               className="pointer-events-none absolute bottom-6 inset-x-0 flex flex-col items-center justify-center gap-2 text-xs text-muted"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0.1, 0.8, 0.1], y: [0, 10, 0] }}
-              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+              initial={motionEnabled ? { opacity: 0 } : false}
+              animate={
+                motionEnabled
+                  ? { opacity: [0.1, 0.8, 0.1], y: [0, 10, 0] }
+                  : { opacity: 0.5, y: 0 }
+              }
+              transition={
+                motionEnabled
+                  ? { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
+                  : undefined
+              }
               style={{ willChange: "transform, opacity" }}
             >
               <svg
@@ -317,9 +338,9 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
           <section className="space-y-8 py-10">
             <m.div
               className="flex flex-col gap-2"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={motionEnabled ? { opacity: 0, y: 10 } : false}
+              whileInView={motionEnabled ? { opacity: 1, y: 0 } : undefined}
+              viewport={motionEnabled ? { once: true } : undefined}
             >
               <p className="text-sm uppercase tracking-[0.3em] text-muted">
                 About
@@ -328,9 +349,15 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
             </m.div>
             <m.div
               className="grid gap-6 lg:grid-cols-3"
-              variants={container}
-              initial="hidden"
-              animate={aboutReveal.hasRevealed ? "show" : "hidden"}
+              variants={containerVariant}
+              initial={motionEnabled ? "hidden" : false}
+              animate={
+                motionEnabled
+                  ? aboutReveal.hasRevealed
+                    ? "show"
+                    : "hidden"
+                  : "show"
+              }
               ref={aboutReveal.ref}
             >
               {aboutCards.map((card, index) => (
@@ -339,6 +366,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                   className="p-6"
                   onClick={() => setActiveAbout(index)}
                   ariaExpanded={activeAbout === index}
+                  motionEnabled={motionEnabled}
                 >
                   <div className="space-y-4">
                     <h3 className="font-display text-xl font-semibold line-clamp-2">
@@ -361,9 +389,9 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
           <section className="space-y-8 py-10">
             <m.div
               className="flex flex-col gap-2"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={motionEnabled ? { opacity: 0, y: 10 } : false}
+              whileInView={motionEnabled ? { opacity: 1, y: 0 } : undefined}
+              viewport={motionEnabled ? { once: true } : undefined}
             >
               <p className="text-sm uppercase tracking-[0.3em] text-muted">
                 Articles
@@ -372,16 +400,22 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
             </m.div>
             <m.div
               className="grid gap-6 md:grid-cols-2"
-              variants={container}
-              initial="hidden"
-              animate={articleReveal.hasRevealed ? "show" : "hidden"}
+              variants={containerVariant}
+              initial={motionEnabled ? "hidden" : false}
+              animate={
+                motionEnabled
+                  ? articleReveal.hasRevealed
+                    ? "show"
+                    : "hidden"
+                  : "show"
+              }
               ref={articleReveal.ref}
             >
               {loading && articles.length === 0
                 ? Array.from({ length: 4 }).map((_, index) => (
                     <m.div
                       key={`skeleton-${index}`}
-                      variants={item}
+                      variants={itemVariant}
                       className="card-muted p-6 min-h-[180px] animate-pulse"
                     >
                       <div className="h-3 w-20 rounded-full bg-[color:rgb(var(--ring)/0.35)]" />
@@ -393,7 +427,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                 : null}
               {!loading && articles.length === 0 ? (
                 <m.div
-                  variants={item}
+                  variants={itemVariant}
                   className="card-muted p-6 min-h-[180px] text-sm text-muted"
                 >
                   暂无文章内容。
@@ -404,6 +438,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                   key={article.link}
                   href={article.link}
                   className="p-6 min-h-[180px]"
+                  motionEnabled={motionEnabled}
                 >
                   <div className="space-y-4">
                     {article.pubDate ? (
@@ -426,9 +461,9 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
           <section className="py-16">
             <m.div
               className="card p-8 md:p-10"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
+              initial={motionEnabled ? { opacity: 0, y: 16 } : false}
+              whileInView={motionEnabled ? { opacity: 1, y: 0 } : undefined}
+              viewport={motionEnabled ? { once: true, amount: 0.4 } : undefined}
             >
               <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                 <div className="space-y-3">

@@ -279,15 +279,21 @@ body > *:not(.bg-layer) {
   }
 
   .card {
-    --tw-backdrop-blur: blur(18px);
+    --tw-backdrop-blur: blur(0px);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .card-muted {
-    --tw-backdrop-blur: blur(14px);
+    --tw-backdrop-blur: blur(0px);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .card.card-overlay {
-    --tw-backdrop-blur: blur(22px);
+    --tw-backdrop-blur: blur(0px);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
