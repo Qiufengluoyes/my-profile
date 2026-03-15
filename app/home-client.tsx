@@ -42,9 +42,9 @@ const formatDate = (value: string) => {
   }).format(date);
 };
 
-const useRevealOnView = (amount = 0.3) => {
+const useRevealOnView = (amount = 0.01, margin = "0px 0px -2% 0px") => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, { once: true, amount });
+  const inView = useInView(ref, { once: true, amount, margin });
   const [hasRevealed, setHasRevealed] = useState(false);
 
   useEffect(() => {
@@ -54,9 +54,31 @@ const useRevealOnView = (amount = 0.3) => {
   useEffect(() => {
     if (hasRevealed) return;
     if (typeof window === "undefined") return;
+    const node = ref.current;
+    if (!node) return;
+
     if (!("IntersectionObserver" in window)) {
       setHasRevealed(true);
+      return;
     }
+
+    const check = () => {
+      const rect = node.getBoundingClientRect();
+      const viewHeight = window.innerHeight || 0;
+      const inViewport =
+        rect.top < viewHeight * 0.98 && rect.bottom > viewHeight * 0.02;
+      if (inViewport) {
+        setHasRevealed(true);
+      }
+    };
+
+    const raf = requestAnimationFrame(check);
+    const timer = window.setTimeout(check, 200);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
+    };
   }, [hasRevealed]);
 
   return { ref, hasRevealed };
@@ -152,7 +174,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const floatDistance = reduceMotion ? 0 : isMobile ? 5 : 10;
   const hoverLift = reduceMotion ? 0 : isMobile ? 4 : 8;
   const tapPush = reduceMotion ? 0 : isMobile ? 2 : 3;
-  const entryYOffset = reduceMotion ? 0 : isMobile ? 12 : 18;
+  const entryYOffset = reduceMotion ? 0 : isMobile ? 10 : 16;
   const entryStiffness = reduceMotion ? 150 : isMobile ? 170 : 180;
   const entryDamping = reduceMotion ? 26 : isMobile ? 20 : 18;
   const hoverStiffness = reduceMotion ? 200 : isMobile ? 220 : 260;
@@ -160,8 +182,8 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const itemVariant = motionEnabled
     ? createItem(entryYOffset, entryStiffness, entryDamping)
     : undefined;
-  const aboutReveal = useRevealOnView(0.3);
-  const articleReveal = useRevealOnView(0.3);
+  const aboutReveal = useRevealOnView(0.2);
+  const articleReveal = useRevealOnView(0.2);
   const [activeAbout, setActiveAbout] = useState<number | null>(null);
   const activeAboutDetail =
     activeAbout === null ? null : aboutDetails[activeAbout] ?? null;
