@@ -361,7 +361,7 @@ export default function Home() {
             <p className="text-sm uppercase tracking-[0.3em] text-muted">
               Articles
             </p>
-            <h2 className="font-display text-3xl font-semibold">网站文章</h2>
+            <h2 className="font-display text-3xl font-semibold">近期文章</h2>
           </motion.div>
           <motion.div
             className="grid gap-6 md:grid-cols-2"
