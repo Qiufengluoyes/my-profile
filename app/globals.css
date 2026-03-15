@@ -54,7 +54,7 @@ body {
   background-size: 60px 60px, 120px 120px, 180px 180px;
   background-position: 0 0, 30px 30px, 12px 12px;
   background-repeat: repeat;
-  animation: dotWaveBase 26s linear infinite;
+  animation: dotWaveBase 26s linear infinite alternate;
   color: rgb(var(--fg));
   min-height: 100vh;
 }
@@ -68,7 +68,7 @@ body::before {
     radial-gradient(circle, rgb(var(--accent-3) / 0.26) 1.4px, transparent 2.4px);
   background-size: 88px 88px, 150px 150px;
   background-position: 0 0, 44px 22px;
-  animation: dotWaveFloat 18s linear infinite reverse;
+  animation: dotWaveFloat 18s linear infinite alternate-reverse;
   z-index: 0;
   pointer-events: none;
   opacity: 0.85;
@@ -85,7 +85,7 @@ body::after {
   background-position: 0 0;
   filter: blur(2px);
   opacity: 0.65;
-  animation: dotWaveGlow 36s linear infinite;
+  animation: dotWaveGlow 36s linear infinite alternate;
   z-index: 0;
   pointer-events: none;
 }
