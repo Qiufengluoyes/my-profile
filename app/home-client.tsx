@@ -22,14 +22,14 @@ const container = {
   }
 };
 
-const item = {
-  hidden: { opacity: 0, y: 18 },
+const createItem = (offset: number, stiffness: number, damping: number) => ({
+  hidden: { opacity: 0, y: offset },
   show: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 180, damping: 18 }
+    transition: { type: "spring", stiffness, damping }
   }
-};
+});
 
 const formatDate = (value: string) => {
   if (!value) return "";
@@ -67,24 +67,30 @@ function HoverCard({
   className = "",
   onClick,
   ariaExpanded,
-  motionEnabled
+  motionEnabled,
+  itemVariant,
+  hoverLift,
+  tapPush,
+  hoverTransition
 }: {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
   ariaExpanded?: boolean;
   motionEnabled: boolean;
+  itemVariant?: ReturnType<typeof createItem>;
+  hoverLift: number;
+  tapPush: number;
+  hoverTransition: { type: "spring"; stiffness: number; damping: number };
 }) {
   return (
     <m.button
       type="button"
       className={`card w-full cursor-pointer text-left transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.6)] ${className}`}
-      variants={motionEnabled ? item : undefined}
-      whileHover={motionEnabled ? { y: -8 } : undefined}
-      whileTap={motionEnabled ? { y: 3 } : undefined}
-      transition={
-        motionEnabled ? { type: "spring", stiffness: 260, damping: 18 } : undefined
-      }
+      variants={motionEnabled ? itemVariant : undefined}
+      whileHover={motionEnabled ? { y: -hoverLift } : undefined}
+      whileTap={motionEnabled ? { y: tapPush } : undefined}
+      transition={motionEnabled ? hoverTransition : undefined}
       onClick={onClick}
       aria-haspopup="dialog"
       aria-expanded={ariaExpanded}
@@ -98,12 +104,20 @@ function HoverCardLink({
   href,
   children,
   className = "",
-  motionEnabled
+  motionEnabled,
+  itemVariant,
+  hoverLift,
+  tapPush,
+  hoverTransition
 }: {
   href: string;
   children: ReactNode;
   className?: string;
   motionEnabled: boolean;
+  itemVariant?: ReturnType<typeof createItem>;
+  hoverLift: number;
+  tapPush: number;
+  hoverTransition: { type: "spring"; stiffness: number; damping: number };
 }) {
   return (
     <m.a
@@ -111,12 +125,10 @@ function HoverCardLink({
       target="_blank"
       rel="noreferrer"
       className={`card block ${className}`}
-      variants={motionEnabled ? item : undefined}
-      whileHover={motionEnabled ? { y: -8 } : undefined}
-      whileTap={motionEnabled ? { y: 3 } : undefined}
-      transition={
-        motionEnabled ? { type: "spring", stiffness: 260, damping: 18 } : undefined
-      }
+      variants={motionEnabled ? itemVariant : undefined}
+      whileHover={motionEnabled ? { y: -hoverLift } : undefined}
+      whileTap={motionEnabled ? { y: tapPush } : undefined}
+      transition={motionEnabled ? hoverTransition : undefined}
     >
       {children}
     </m.a>
@@ -134,13 +146,49 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const lastFetchedAt = useRef(0);
   const prefersReducedMotion = useReducedMotion();
   const motionEnabled = !prefersReducedMotion;
+  const [isMobile, setIsMobile] = useState(false);
   const containerVariant = motionEnabled ? container : undefined;
-  const itemVariant = motionEnabled ? item : undefined;
+  const floatDistance = isMobile ? 5 : 10;
+  const hoverLift = isMobile ? 4 : 8;
+  const tapPush = isMobile ? 2 : 3;
+  const entryYOffset = isMobile ? 12 : 18;
+  const entryStiffness = isMobile ? 170 : 180;
+  const entryDamping = isMobile ? 20 : 18;
+  const hoverStiffness = isMobile ? 220 : 260;
+  const hoverDamping = isMobile ? 22 : 18;
+  const itemVariant = motionEnabled
+    ? createItem(entryYOffset, entryStiffness, entryDamping)
+    : undefined;
   const aboutReveal = useRevealOnView(0.3);
   const articleReveal = useRevealOnView(0.3);
   const [activeAbout, setActiveAbout] = useState<number | null>(null);
   const activeAboutDetail =
     activeAbout === null ? null : aboutDetails[activeAbout] ?? null;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const query = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+
+    type LegacyMediaQueryList = MediaQueryList & {
+      addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+      removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+    };
+
+    const onChange = (_event?: MediaQueryListEvent) => update();
+
+    if (typeof query.addEventListener === "function") {
+      query.addEventListener("change", onChange);
+      return () => query.removeEventListener("change", onChange);
+    }
+
+    const legacy = query as LegacyMediaQueryList;
+    if (typeof legacy.addListener === "function") {
+      legacy.addListener(onChange);
+      return () => legacy.removeListener?.(onChange);
+    }
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -305,7 +353,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
               initial={motionEnabled ? { opacity: 0 } : false}
               animate={
                 motionEnabled
-                  ? { opacity: [0.1, 0.8, 0.1], y: [0, 10, 0] }
+                  ? { opacity: [0.1, 0.8, 0.1], y: [0, floatDistance, 0] }
                   : { opacity: 0.5, y: 0 }
               }
               transition={
@@ -367,6 +415,14 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                   onClick={() => setActiveAbout(index)}
                   ariaExpanded={activeAbout === index}
                   motionEnabled={motionEnabled}
+                  itemVariant={itemVariant}
+                  hoverLift={hoverLift}
+                  tapPush={tapPush}
+                  hoverTransition={{
+                    type: "spring",
+                    stiffness: hoverStiffness,
+                    damping: hoverDamping
+                  }}
                 >
                   <div className="space-y-4">
                     <h3 className="font-display text-xl font-semibold line-clamp-2">
@@ -439,6 +495,14 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                   href={article.link}
                   className="p-6 min-h-[180px]"
                   motionEnabled={motionEnabled}
+                  itemVariant={itemVariant}
+                  hoverLift={hoverLift}
+                  tapPush={tapPush}
+                  hoverTransition={{
+                    type: "spring",
+                    stiffness: hoverStiffness,
+                    damping: hoverDamping
+                  }}
                 >
                   <div className="space-y-4">
                     {article.pubDate ? (

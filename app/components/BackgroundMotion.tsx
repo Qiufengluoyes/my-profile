@@ -294,22 +294,39 @@ export default function BackgroundMotion() {
 
     const mobileQuery = window.matchMedia("(max-width: 640px)");
     const themeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const run = () => applyDots(mobileQuery.matches);
+    const run = (_event?: MediaQueryListEvent) => applyDots(mobileQuery.matches);
 
     run();
-    const bind = (query: MediaQueryList, handler: () => void) => {
-      if ("addEventListener" in query) {
+    type LegacyMediaQueryList = MediaQueryList & {
+      addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+      removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+    };
+
+    const bind = (
+      query: MediaQueryList,
+      handler: (event: MediaQueryListEvent) => void
+    ) => {
+      if (typeof query.addEventListener === "function") {
         query.addEventListener("change", handler);
-      } else if ("addListener" in query) {
-        query.addListener(handler);
+        return;
+      }
+      const legacy = query as LegacyMediaQueryList;
+      if (typeof legacy.addListener === "function") {
+        legacy.addListener(handler);
       }
     };
 
-    const unbind = (query: MediaQueryList, handler: () => void) => {
-      if ("removeEventListener" in query) {
+    const unbind = (
+      query: MediaQueryList,
+      handler: (event: MediaQueryListEvent) => void
+    ) => {
+      if (typeof query.removeEventListener === "function") {
         query.removeEventListener("change", handler);
-      } else if ("removeListener" in query) {
-        query.removeListener(handler);
+        return;
+      }
+      const legacy = query as LegacyMediaQueryList;
+      if (typeof legacy.removeListener === "function") {
+        legacy.removeListener(handler);
       }
     };
 
