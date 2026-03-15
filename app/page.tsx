@@ -465,12 +465,11 @@ export default function Home() {
               aria-modal="true"
               aria-labelledby="about-detail-title"
               onClick={(event) => event.stopPropagation()}
-              className="card relative z-10 w-full max-w-6xl p-8 md:p-12"
+              className="card card-overlay relative z-10 w-full max-w-6xl p-8 md:p-12"
               style={{
-                background: `linear-gradient(145deg, rgb(var(--card) / 0.92), rgb(var(--accent-3) / 0.25))`,
-                borderColor: "rgb(var(--accent) / 0.38)",
+                borderColor: "rgb(var(--accent) / 0.32)",
                 boxShadow: "0 30px 80px rgba(15, 23, 42, 0.18)",
-                outline: "1px solid rgb(var(--accent) / 0.18)",
+                outline: "1px solid rgb(var(--accent) / 0.16)",
                 outlineOffset: "-1px"
               }}
               initial={{ opacity: 0, y: 20, scale: 0.98 }}

@@ -151,6 +151,14 @@ body > * {
     outline-offset: -1px;
   }
 
+  .card-overlay {
+    background: linear-gradient(
+      145deg,
+      rgb(var(--card) / 0.94),
+      rgb(var(--card-2) / 0.9)
+    );
+  }
+
   .card-muted {
     @apply rounded-3xl border border-[color:rgb(var(--ring)/0.4)] shadow-card backdrop-blur-2xl;
     background: linear-gradient(
@@ -167,6 +175,16 @@ body > * {
 
   .chip {
     @apply inline-flex items-center gap-2 rounded-full bg-[color:rgb(var(--accent)/0.14)] px-3 py-1 text-xs font-medium text-[color:rgb(var(--accent))];
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-overlay {
+    background: linear-gradient(
+      145deg,
+      rgb(var(--card) / 0.92),
+      rgb(var(--card-2) / 0.82)
+    );
   }
 }
 
