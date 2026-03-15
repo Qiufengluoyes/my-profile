@@ -465,10 +465,12 @@ export default function Home() {
               aria-modal="true"
               aria-labelledby="about-detail-title"
               onClick={(event) => event.stopPropagation()}
-              className="relative z-10 w-full max-w-6xl rounded-3xl border border-[color:rgb(var(--accent)/0.5)] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.25)] md:p-12"
+              className="card relative z-10 w-full max-w-6xl p-8 md:p-12"
               style={{
-                background: `linear-gradient(145deg, rgb(var(--accent) / 0.22), rgb(var(--accent-2) / 0.28))`,
-                outline: "1px solid rgb(var(--accent) / 0.2)",
+                background: `linear-gradient(145deg, rgb(var(--card) / 0.92), rgb(var(--accent-3) / 0.25))`,
+                borderColor: "rgb(var(--accent) / 0.38)",
+                boxShadow: "0 30px 80px rgba(15, 23, 42, 0.18)",
+                outline: "1px solid rgb(var(--accent) / 0.18)",
                 outlineOffset: "-1px"
               }}
               initial={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -541,4 +543,3 @@ export default function Home() {
     </div>
   );
 }
-

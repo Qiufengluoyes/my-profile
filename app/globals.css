@@ -62,7 +62,7 @@ body {
 body::before {
   content: "";
   position: absolute;
-  inset: -25vmax;
+  inset: 0;
   background-image:
     radial-gradient(circle, rgb(var(--accent) / 0.3) 1.8px, transparent 2.6px),
     radial-gradient(circle, rgb(var(--accent-3) / 0.26) 1.4px, transparent 2.4px);
@@ -78,7 +78,7 @@ body::before {
 body::after {
   content: "";
   position: absolute;
-  inset: -28vmax;
+  inset: 0;
   background-image:
     radial-gradient(circle, rgb(var(--accent-2) / 0.28) 2.4px, transparent 3.6px);
   background-size: 170px 170px;
