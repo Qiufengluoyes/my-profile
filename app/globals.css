@@ -144,21 +144,21 @@ body > * {
     @apply rounded-3xl border border-[color:rgb(var(--ring)/0.45)] shadow-card backdrop-blur-2xl;
     background: linear-gradient(
       145deg,
-      rgb(var(--card) / 0.92),
-      rgb(var(--card-tint) / 0.92)
+      rgb(var(--card) / 0.96),
+      rgb(var(--card-2) / 0.88)
     );
     outline: 1px solid rgb(var(--accent) / 0.12);
     outline-offset: -1px;
   }
 
   .card-muted {
-    @apply rounded-2xl border border-[color:rgb(var(--ring)/0.38)] shadow-soft backdrop-blur-xl;
+    @apply rounded-3xl border border-[color:rgb(var(--ring)/0.4)] shadow-card backdrop-blur-2xl;
     background: linear-gradient(
       145deg,
-      rgb(var(--card-2) / 0.88),
-      rgb(var(--card-tint) / 0.78)
+      rgb(var(--card) / 0.82),
+      rgb(var(--card-tint) / 0.82)
     );
-    outline: 1px solid rgb(var(--accent) / 0.08);
+    outline: 1px solid rgb(var(--accent) / 0.1);
     outline-offset: -1px;
   }
   .tag {
