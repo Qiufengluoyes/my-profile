@@ -145,17 +145,18 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const lastHash = useRef("");
   const lastFetchedAt = useRef(0);
   const prefersReducedMotion = useReducedMotion();
-  const motionEnabled = !prefersReducedMotion;
+  const reduceMotion = prefersReducedMotion;
+  const motionEnabled = true;
   const [isMobile, setIsMobile] = useState(false);
   const containerVariant = motionEnabled ? container : undefined;
-  const floatDistance = isMobile ? 5 : 10;
-  const hoverLift = isMobile ? 4 : 8;
-  const tapPush = isMobile ? 2 : 3;
-  const entryYOffset = isMobile ? 12 : 18;
-  const entryStiffness = isMobile ? 170 : 180;
-  const entryDamping = isMobile ? 20 : 18;
-  const hoverStiffness = isMobile ? 220 : 260;
-  const hoverDamping = isMobile ? 22 : 18;
+  const floatDistance = reduceMotion ? 0 : isMobile ? 5 : 10;
+  const hoverLift = reduceMotion ? 0 : isMobile ? 4 : 8;
+  const tapPush = reduceMotion ? 0 : isMobile ? 2 : 3;
+  const entryYOffset = reduceMotion ? 0 : isMobile ? 12 : 18;
+  const entryStiffness = reduceMotion ? 150 : isMobile ? 170 : 180;
+  const entryDamping = reduceMotion ? 26 : isMobile ? 20 : 18;
+  const hoverStiffness = reduceMotion ? 200 : isMobile ? 220 : 260;
+  const hoverDamping = reduceMotion ? 26 : isMobile ? 22 : 18;
   const itemVariant = motionEnabled
     ? createItem(entryYOffset, entryStiffness, entryDamping)
     : undefined;
@@ -284,7 +285,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
         <main className="mx-auto max-w-6xl px-6">
           <section className="relative min-h-[100svh] pt-[var(--hero-gap)] pb-[var(--hero-gap-bottom)]">
             <m.div
-              className="card flex w-full items-center p-8 md:p-12"
+              className="card flex w-full items-center p-10 md:p-14"
               style={{
                 minHeight:
                   "calc(100svh - var(--hero-gap) - var(--hero-gap-bottom))"
@@ -352,21 +353,21 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
               className="pointer-events-none absolute bottom-6 inset-x-0 flex flex-col items-center justify-center gap-2 text-xs text-muted"
               initial={motionEnabled ? { opacity: 0 } : false}
               animate={
-                motionEnabled
-                  ? { opacity: [0.1, 0.8, 0.1], y: [0, floatDistance, 0] }
-                  : { opacity: 0.5, y: 0 }
+                reduceMotion
+                  ? { opacity: [0.2, 0.6, 0.2], y: [0, 0, 0] }
+                  : { opacity: [0.1, 0.8, 0.1], y: [0, floatDistance, 0] }
               }
               transition={
-                motionEnabled
-                  ? { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
-                  : undefined
+                reduceMotion
+                  ? { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                  : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
               }
               style={{ willChange: "transform, opacity" }}
             >
               <svg
                 className="block"
-                width="24"
-                height="24"
+                width="26"
+                height="26"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -375,7 +376,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                 <path
                   d="M12 5v14m0 0-6-6m6 6 6-6"
                   stroke="currentColor"
-                  strokeWidth="1.5"
+                  strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
