@@ -638,13 +638,18 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                   <button
                     type="button"
                     onClick={() => setActiveAbout(null)}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.35)] bg-[color:rgb(var(--accent)/0.12)] text-[color:rgb(var(--accent))] transition hover:bg-[color:rgb(var(--accent)/0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)]"
+                    className="inline-flex items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.35)] bg-[color:rgb(var(--accent)/0.12)] text-[color:rgb(var(--accent))] transition hover:bg-[color:rgb(var(--accent)/0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)]"
                     aria-label="关闭"
                     style={{
                       borderWidth: "1.5px",
                       borderRadius: "9999px",
                       width: "2.25rem",
-                      height: "2.25rem"
+                      height: "2.25rem",
+                      minWidth: "2.25rem",
+                      minHeight: "2.25rem",
+                      padding: 0,
+                      flex: "0 0 auto",
+                      aspectRatio: "1 / 1"
                     }}
                   >
                     <svg
