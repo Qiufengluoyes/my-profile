@@ -1,4 +1,4 @@
-export const siteName = "枫落丰源 Center";
+export const siteName = "枫落丰源";
 export const siteUrl = "https://www.feng1026.top";
 export const description = "和你的日常，就是奇迹";
 

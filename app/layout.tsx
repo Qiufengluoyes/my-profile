@@ -20,7 +20,7 @@ const body = Noto_Sans_SC({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `「${siteName}」个人主页`,
+    default: `${siteName} Center`,
     template: `%s | ${siteName}`
   },
   description,
