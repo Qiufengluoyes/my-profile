@@ -75,6 +75,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" className={`${display.variable} ${body.variable}`}>
       <body className="min-h-screen bg-bg text-fg antialiased">
+        <div className="bg-layer" aria-hidden="true" />
         <BackgroundMotion />
         <ScrollRestorer />
         {children}

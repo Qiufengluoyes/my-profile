@@ -47,27 +47,44 @@ body {
   font-family: var(--font-body);
   position: relative;
   background-color: rgb(var(--bg));
-  background-image:
-    radial-gradient(circle, rgb(var(--accent) / 0.18) 1.4px, transparent 2.4px),
-    radial-gradient(circle, rgb(var(--accent-2) / 0.14) 1.6px, transparent 2.6px),
-    radial-gradient(circle, rgb(var(--accent-3) / 0.1) 2px, transparent 3.2px);
-  background-size: 60px 60px, 120px 120px, 180px 180px;
-  background-position: 0 0, 30px 30px, 12px 12px;
-  background-repeat: repeat;
-  animation: dotWaveBase 26s linear infinite alternate;
   color: rgb(var(--fg));
   min-height: 100vh;
 }
 
-body::before {
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    var(--bg-dots-base-1, radial-gradient(circle, rgb(var(--accent) / 0.18) 1.4px, transparent 2.4px)),
+    var(--bg-dots-base-2, radial-gradient(circle, rgb(var(--accent-2) / 0.14) 1.6px, transparent 2.6px)),
+    var(--bg-dots-base-3, radial-gradient(circle, rgb(var(--accent-3) / 0.1) 2px, transparent 3.2px));
+  background-size:
+    var(--bg-dots-base-size-1, 72px 72px),
+    var(--bg-dots-base-size-2, 150px 150px),
+    var(--bg-dots-base-size-3, 220px 220px);
+  background-position:
+    var(--bg-dots-base-pos-1, 0 0),
+    var(--bg-dots-base-pos-2, 36px 36px),
+    var(--bg-dots-base-pos-3, 18px 18px);
+  background-repeat: repeat;
+  animation: dotWaveBase 26s linear infinite alternate;
+}
+
+.bg-layer::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle, rgb(var(--accent) / 0.34) 2.2px, transparent 3.4px),
-    radial-gradient(circle, rgb(var(--accent-3) / 0.22) 1.6px, transparent 2.8px);
-  background-size: 96px 96px, 160px 160px;
-  background-position: 0 0, 44px 22px;
+    var(--bg-dots-mid-1, radial-gradient(circle, rgb(var(--accent) / 0.34) 2.2px, transparent 3.4px)),
+    var(--bg-dots-mid-2, radial-gradient(circle, rgb(var(--accent-3) / 0.22) 1.6px, transparent 2.8px));
+  background-size:
+    var(--bg-dots-mid-size-1, 120px 120px),
+    var(--bg-dots-mid-size-2, 190px 190px);
+  background-position:
+    var(--bg-dots-mid-pos-1, 0 0),
+    var(--bg-dots-mid-pos-2, 44px 22px);
   animation: dotWaveFloat 18s linear infinite alternate-reverse;
   z-index: 0;
   pointer-events: none;
@@ -76,14 +93,13 @@ body::before {
   will-change: background-position, opacity;
 }
 
-body::after {
+.bg-layer::after {
   content: "";
   position: absolute;
   inset: 0;
-  background-image:
-    radial-gradient(circle, rgb(var(--accent-2) / 0.32) 3.2px, transparent 4.6px);
-  background-size: 190px 190px;
-  background-position: 0 0;
+  background-image: var(--bg-dots-glow-1, radial-gradient(circle, rgb(var(--accent-2) / 0.32) 3.2px, transparent 4.6px));
+  background-size: var(--bg-dots-glow-size-1, 240px 240px);
+  background-position: var(--bg-dots-glow-pos-1, 0 0);
   filter: blur(2.8px);
   opacity: 0.6;
   animation: dotWaveGlow 36s linear infinite alternate;
@@ -91,7 +107,16 @@ body::after {
   pointer-events: none;
 }
 
-body > * {
+@media (min-width: 641px) {
+  .bg-layer::before,
+  .bg-layer::after {
+    contain: paint;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
+
+body > *:not(.bg-layer) {
   position: relative;
   z-index: 1;
 }
@@ -159,11 +184,11 @@ body > * {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before,
-  body::after {
+  .bg-layer::before,
+  .bg-layer::after {
     animation: none;
   }
-  body {
+  .bg-layer {
     animation: none;
   }
 }
@@ -225,25 +250,30 @@ body > * {
 }
 
 @media (max-width: 640px) {
-  body {
+  .bg-layer {
     background-image:
-      radial-gradient(circle, rgb(var(--accent) / 0.14) 1.2px, transparent 2.4px),
-      radial-gradient(circle, rgb(var(--accent-2) / 0.1) 1.4px, transparent 2.6px);
-    background-size: 80px 80px, 160px 160px;
+      var(--bg-dots-base-1, radial-gradient(circle, rgb(var(--accent) / 0.14) 1.2px, transparent 2.4px)),
+      var(--bg-dots-base-2, radial-gradient(circle, rgb(var(--accent-2) / 0.1) 1.4px, transparent 2.6px));
+    background-size:
+      var(--bg-dots-base-size-1, 90px 90px),
+      var(--bg-dots-base-size-2, 180px 180px);
+    background-position:
+      var(--bg-dots-base-pos-1, 0 0),
+      var(--bg-dots-base-pos-2, 36px 36px);
     animation: none;
   }
 
-  body::before,
-  body::after {
+  .bg-layer::before,
+  .bg-layer::after {
     animation: none;
   }
 
-  body::before {
+  .bg-layer::before {
     opacity: 0.55;
     filter: blur(0.4px);
   }
 
-  body::after {
+  .bg-layer::after {
     opacity: 0.4;
     filter: blur(1.6px);
   }
