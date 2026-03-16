@@ -11,7 +11,7 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import EmailProtect from "./components/EmailProtect";
-import { aboutCards, aboutDetails, stats } from "./site-data";
+import { aboutCards, aboutDetails, heroLinks, stats } from "./site-data";
 import type { Article } from "./lib/rss";
 
 const container = {
@@ -382,27 +382,30 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                       </m.div>
                     ))}
                   </div>
-                  <div className="space-y-3">
-                    <m.a
-                      href="https://blog.feng1026.top"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.5)] bg-[color:rgb(var(--accent)/0.2)] px-6 py-2.5 text-base font-semibold leading-none text-[color:rgb(var(--accent))] shadow-sm transition duration-200 ease-out hover:bg-[color:rgb(var(--accent)/0.28)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)]"
-                      whileHover={motionEnabled ? { y: -buttonHoverLift } : undefined}
-                      whileTap={motionEnabled ? { y: buttonTapPush } : undefined}
-                      transition={
-                        motionEnabled
-                          ? {
-                              type: "spring",
-                              stiffness: buttonHoverStiffness,
-                              damping: buttonHoverDamping
-                            }
-                          : undefined
-                      }
-                      style={{ willChange: "transform" }}
-                    >
-                      个人网站
-                    </m.a>
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {heroLinks.map((link) => (
+                      <m.a
+                        key={link.href}
+                        href={link.href}
+                        target={link.external ? "_blank" : undefined}
+                        rel={link.external ? "noreferrer" : undefined}
+                        className="flex w-full items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.5)] bg-[color:rgb(var(--accent)/0.2)] px-6 py-3 text-base font-semibold leading-none text-[color:rgb(var(--accent))] shadow-sm transition duration-200 ease-out hover:bg-[color:rgb(var(--accent)/0.28)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)]"
+                        whileHover={motionEnabled ? { y: -buttonHoverLift } : undefined}
+                        whileTap={motionEnabled ? { y: buttonTapPush } : undefined}
+                        transition={
+                          motionEnabled
+                            ? {
+                                type: "spring",
+                                stiffness: buttonHoverStiffness,
+                                damping: buttonHoverDamping
+                              }
+                            : undefined
+                        }
+                        style={{ willChange: "transform" }}
+                      >
+                        {link.label}
+                      </m.a>
+                    ))}
                   </div>
                 </m.div>
               </div>

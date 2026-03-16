@@ -8,6 +8,14 @@ export const stats = [
   { label: "🏷️ 语言", value: "中文 / Chinese" }
 ];
 
+export const heroLinks = [
+  {
+    label: "个人网站",
+    href: "https://blog.feng1026.top",
+    external: true
+  }
+];
+
 export const aboutCards = [
   {
     title: "我在做什么",
