@@ -196,6 +196,8 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   };
   const buttonHoverLift = reduceMotion ? 0 : 4;
   const buttonTapPush = reduceMotion ? 0 : 2;
+  const buttonHoverStiffness = reduceMotion ? 320 : 520;
+  const buttonHoverDamping = reduceMotion ? 18 : 30;
   const itemVariant = motionEnabled
     ? createItem(entryYOffset, entryStiffness, entryDamping)
     : undefined;
@@ -383,6 +385,8 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                   <div className="space-y-3">
                     <m.a
                       href="https://blog.feng1026.top"
+                      target="_blank"
+                      rel="noreferrer"
                       className="inline-flex items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.5)] bg-[color:rgb(var(--accent)/0.2)] px-6 py-2.5 text-base font-semibold leading-none text-[color:rgb(var(--accent))] shadow-sm transition duration-200 ease-out hover:bg-[color:rgb(var(--accent)/0.28)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)]"
                       whileHover={motionEnabled ? { y: -buttonHoverLift } : undefined}
                       whileTap={motionEnabled ? { y: buttonTapPush } : undefined}
@@ -390,8 +394,8 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                         motionEnabled
                           ? {
                               type: "spring",
-                              stiffness: hoverStiffness,
-                              damping: hoverDamping
+                              stiffness: buttonHoverStiffness,
+                              damping: buttonHoverDamping
                             }
                           : undefined
                       }
