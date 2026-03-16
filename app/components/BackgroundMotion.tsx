@@ -14,6 +14,15 @@ const randFloat = (min: number, max: number) =>
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
 
+const toLuminance = (value: [number, number, number]) => {
+  const [r, g, b] = value.map((channel) => channel / 255) as [
+    number,
+    number,
+    number
+  ];
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+
 const parsePosition = (value: string) => {
   const [x = "0", y = "0"] = value.trim().split(/\s+/);
   return {
@@ -155,6 +164,11 @@ export default function BackgroundMotion() {
       const accent = parseRgb(rootStyles.getPropertyValue("--accent"));
       const accent2 = parseRgb(rootStyles.getPropertyValue("--accent-2"));
       const accent3 = parseRgb(rootStyles.getPropertyValue("--accent-3"));
+      const bg = parseRgb(rootStyles.getPropertyValue("--bg"));
+      const isLight = toLuminance(bg) > 0.6;
+      const alphaScale = isLight ? 1.35 : 1;
+      const scaled = (value: number) =>
+        clamp(value * alphaScale, 0.08, 0.6);
 
       const clearVars = () => {
         const vars = [
@@ -195,7 +209,7 @@ export default function BackgroundMotion() {
           radiusMin: 0.9,
           radiusMax: 1.3,
           color: accent,
-          alpha: 0.18
+          alpha: scaled(0.18)
         })
       );
       layer.style.setProperty(
@@ -207,7 +221,7 @@ export default function BackgroundMotion() {
           radiusMin: 1.1,
           radiusMax: 1.6,
           color: accent2,
-          alpha: 0.14
+          alpha: scaled(0.14)
         })
       );
       layer.style.setProperty(
@@ -219,7 +233,7 @@ export default function BackgroundMotion() {
           radiusMin: 1.4,
           radiusMax: 2.1,
           color: accent3,
-          alpha: 0.1
+          alpha: scaled(0.1)
         })
       );
       layer.style.setProperty("--bg-dots-base-size-1", "72px 72px");
@@ -247,7 +261,7 @@ export default function BackgroundMotion() {
           radiusMin: 1.8,
           radiusMax: 2.5,
           color: accent,
-          alpha: 0.34
+          alpha: scaled(0.34)
         })
       );
       layer.style.setProperty(
@@ -259,7 +273,7 @@ export default function BackgroundMotion() {
           radiusMin: 1.4,
           radiusMax: 2,
           color: accent3,
-          alpha: 0.22
+          alpha: scaled(0.22)
         })
       );
       layer.style.setProperty("--bg-dots-mid-size-1", "120px 120px");
@@ -282,7 +296,7 @@ export default function BackgroundMotion() {
           radiusMin: 2.4,
           radiusMax: 3.2,
           color: accent2,
-          alpha: 0.32
+          alpha: scaled(0.32)
         })
       );
       layer.style.setProperty("--bg-dots-glow-size-1", "240px 240px");

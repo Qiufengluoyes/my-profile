@@ -261,6 +261,22 @@ body > *:not(.bg-layer) {
   }
 }
 
+@media (max-width: 640px) and (prefers-color-scheme: light) {
+  .bg-layer {
+    background-image:
+      var(--bg-dots-base-1, radial-gradient(circle, rgb(var(--accent) / 0.2) 1.2px, transparent 2.4px)),
+      var(--bg-dots-base-2, radial-gradient(circle, rgb(var(--accent-2) / 0.16) 1.4px, transparent 2.6px));
+  }
+
+  .bg-layer::before {
+    opacity: 0.7;
+  }
+
+  .bg-layer::after {
+    opacity: 0.5;
+  }
+}
+
 @layer utilities {
   .line-clamp-2 {
     display: -webkit-box;
