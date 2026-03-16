@@ -164,7 +164,7 @@ body > *:not(.bg-layer) {
 
 @layer components {
   .card {
-    @apply rounded-3xl border border-[color:rgb(var(--ring)/0.45)] shadow-card backdrop-blur-2xl;
+    @apply rounded-3xl border border-[color:rgb(var(--accent)/0.32)] shadow-card backdrop-blur-2xl;
     background: linear-gradient(
       145deg,
       rgb(var(--card) / 0.96),
@@ -184,7 +184,7 @@ body > *:not(.bg-layer) {
   }
 
   .card-muted {
-    @apply rounded-3xl border border-[color:rgb(var(--ring)/0.4)] shadow-card backdrop-blur-2xl;
+    @apply rounded-3xl border border-[color:rgb(var(--accent)/0.32)] shadow-card backdrop-blur-2xl;
     background: linear-gradient(
       145deg,
       rgb(var(--card) / 0.82),

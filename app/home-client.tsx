@@ -181,14 +181,19 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const motionEnabled = true;
   const [isMobile, setIsMobile] = useState(false);
   const containerVariant = motionEnabled ? container : undefined;
-  const floatDistance = reduceMotion ? 0 : isMobile ? 5 : 10;
-  const hoverLift = reduceMotion ? 0 : isMobile ? 4 : 8;
-  const tapPush = reduceMotion ? 0 : isMobile ? 2 : 3;
-  const entryYOffset = reduceMotion ? 0 : isMobile ? 10 : 16;
-  const entryStiffness = reduceMotion ? 150 : isMobile ? 170 : 180;
-  const entryDamping = reduceMotion ? 26 : isMobile ? 20 : 18;
-  const hoverStiffness = reduceMotion ? 200 : isMobile ? 220 : 260;
-  const hoverDamping = reduceMotion ? 26 : isMobile ? 22 : 18;
+  const floatDistance = reduceMotion ? 0 : 10;
+  const hoverLift = reduceMotion ? 0 : 8;
+  const tapPush = reduceMotion ? 0 : 3;
+  const entryYOffset = reduceMotion ? 0 : 16;
+  const entryStiffness = reduceMotion ? 150 : 180;
+  const entryDamping = reduceMotion ? 26 : 18;
+  const hoverStiffness = reduceMotion ? 200 : 260;
+  const hoverDamping = reduceMotion ? 26 : 18;
+  const floatTransition = {
+    duration: 2.8,
+    repeat: Infinity,
+    ease: "easeInOut"
+  };
   const itemVariant = motionEnabled
     ? createItem(entryYOffset, entryStiffness, entryDamping)
     : undefined;
@@ -389,11 +394,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                   ? { opacity: [0.2, 0.6, 0.2], y: [0, 0, 0] }
                   : { opacity: [0.1, 0.8, 0.1], y: [0, floatDistance, 0] }
               }
-              transition={
-                reduceMotion
-                  ? { duration: 4, repeat: Infinity, ease: "easeInOut" }
-                  : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
-              }
+              transition={floatTransition}
               style={{ willChange: "transform, opacity" }}
             >
               <svg
