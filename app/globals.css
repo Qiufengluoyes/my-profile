@@ -201,6 +201,14 @@ body > *:not(.bg-layer) {
   .chip {
     @apply inline-flex items-center gap-2 rounded-full bg-[color:rgb(var(--accent)/0.14)] px-3 py-1 text-xs font-medium text-[color:rgb(var(--accent))];
   }
+
+  .card-hover-shadow {
+    transition: box-shadow 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
+
+.card-hover-shadow:hover {
+  box-shadow: var(--card-hover-shadow);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -214,6 +222,10 @@ body > *:not(.bg-layer) {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --card-hover-shadow: none;
+  }
+
   .bg-layer {
     background-image:
       var(--bg-dots-base-1, radial-gradient(circle, rgb(var(--accent) / 0.14) 1.2px, transparent 2.4px)),

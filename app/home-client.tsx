@@ -118,7 +118,7 @@ function HoverCard({
   return (
     <m.button
       type="button"
-      className={`card w-full cursor-pointer text-left transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.6)] ${className}`}
+      className={`card card-hover-shadow w-full cursor-pointer text-left transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.6)] ${className}`}
       variants={motionEnabled ? itemVariant : undefined}
       whileHover={motionEnabled ? { y: -hoverLift } : undefined}
       whileTap={motionEnabled ? { y: tapPush } : undefined}
@@ -156,7 +156,7 @@ function HoverCardLink({
       href={href}
       target="_blank"
       rel="noreferrer"
-      className={`card block ${className}`}
+      className={`card card-hover-shadow block transition-shadow ${className}`}
       variants={motionEnabled ? itemVariant : undefined}
       whileHover={motionEnabled ? { y: -hoverLift } : undefined}
       whileTap={motionEnabled ? { y: tapPush } : undefined}

@@ -84,6 +84,7 @@ export type ThemeTokens = {
   accent2: string;
   accent3: string;
   ring: string;
+  cardHoverShadow: string;
   heroGap: string;
   heroGapBottom: string;
 };
@@ -100,6 +101,7 @@ export const theme = {
     accent2: "134 197 255",
     accent3: "199 217 255",
     ring: "180 200 230",
+    cardHoverShadow: "0 14px 32px rgba(15, 23, 42, 0.12)",
     heroGap: "clamp(20px, 5.5vh, 72px)",
     heroGapBottom: "clamp(40px, 9vh, 140px)"
   },
@@ -114,6 +116,7 @@ export const theme = {
     accent2: "144 200 255",
     accent3: "190 200 255",
     ring: "54 75 110",
+    cardHoverShadow: "0 12px 28px rgba(2, 6, 23, 0.22)",
     heroGap: "clamp(20px, 5.5vh, 72px)",
     heroGapBottom: "clamp(40px, 9vh, 140px)"
   }
@@ -130,6 +133,7 @@ const toCssVars = (tokens: ThemeTokens) => `
   --accent-2: ${tokens.accent2};
   --accent-3: ${tokens.accent3};
   --ring: ${tokens.ring};
+  --card-hover-shadow: ${tokens.cardHoverShadow};
   --hero-gap: ${tokens.heroGap};
   --hero-gap-bottom: ${tokens.heroGapBottom};
 `;
