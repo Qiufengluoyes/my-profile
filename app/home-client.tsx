@@ -194,6 +194,8 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
     repeat: Infinity,
     ease: "easeInOut"
   };
+  const buttonHoverLift = reduceMotion ? 0 : 4;
+  const buttonTapPush = reduceMotion ? 0 : 2;
   const itemVariant = motionEnabled
     ? createItem(entryYOffset, entryStiffness, entryDamping)
     : undefined;
@@ -379,9 +381,24 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                     ))}
                   </div>
                   <div className="space-y-3">
-                    <a href="https://blog.feng1026.top" className="chip">
+                    <m.a
+                      href="https://blog.feng1026.top"
+                      className="inline-flex items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.5)] bg-[color:rgb(var(--accent)/0.2)] px-6 py-2.5 text-base font-semibold leading-none text-[color:rgb(var(--accent))] shadow-sm transition duration-200 ease-out hover:bg-[color:rgb(var(--accent)/0.28)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)]"
+                      whileHover={motionEnabled ? { y: -buttonHoverLift } : undefined}
+                      whileTap={motionEnabled ? { y: buttonTapPush } : undefined}
+                      transition={
+                        motionEnabled
+                          ? {
+                              type: "spring",
+                              stiffness: hoverStiffness,
+                              damping: hoverDamping
+                            }
+                          : undefined
+                      }
+                      style={{ willChange: "transform" }}
+                    >
                       个人网站
-                    </a>
+                    </m.a>
                   </div>
                 </m.div>
               </div>
