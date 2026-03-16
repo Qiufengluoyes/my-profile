@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { fetchRssItems } from "../../lib/rss";
 
 export const revalidate = 7200;
