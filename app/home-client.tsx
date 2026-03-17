@@ -323,13 +323,13 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   return (
     <LazyMotion features={domAnimation}>
       <div className="relative overflow-hidden">
-        <main className="mx-auto max-w-6xl px-6">
+        <main className="mx-auto max-w-7xl px-6">
           <section className="relative min-h-[100svh] pt-[var(--hero-gap)] pb-[var(--hero-gap-bottom)]">
             <m.div
-              className="card flex w-full items-center p-10 md:p-14"
+              className="card flex w-full items-center p-8 md:p-12 lg:p-14"
               style={{
                 minHeight:
-                  "calc(100svh - var(--hero-gap) - var(--hero-gap-bottom))"
+                  "calc(100svh - var(--hero-gap) - var(--hero-gap-bottom) - 32px)"
               }}
               variants={containerVariant}
               initial={motionEnabled ? "hidden" : false}
@@ -411,7 +411,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
               </div>
             </m.div>
             <m.div
-              className="pointer-events-none absolute bottom-6 inset-x-0 flex flex-col items-center justify-center gap-2 text-xs text-muted"
+              className="pointer-events-none absolute bottom-14 inset-x-0 flex flex-col items-center justify-center gap-2 text-xs text-muted"
               initial={motionEnabled ? { opacity: 0 } : false}
               animate={
                 reduceMotion
@@ -633,7 +633,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                 aria-modal="true"
                 aria-labelledby="about-detail-title"
                 onClick={(event) => event.stopPropagation()}
-                className="card card-overlay relative z-10 w-full max-w-6xl p-8 md:p-12"
+                className="card card-overlay relative z-10 w-full max-w-5xl h-auto max-h-[calc(100svh-56px)] overflow-hidden"
                 style={{
                   borderColor: "rgb(var(--accent) / 0.32)",
                   boxShadow: "0 30px 80px rgba(15, 23, 42, 0.18)",
@@ -645,8 +645,32 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                 exit={{ opacity: 0, y: 12, scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 260, damping: 24 }}
               >
-                <div className="flex items-start justify-between gap-6">
-                  <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => setActiveAbout(null)}
+                  className="absolute right-5 top-5 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.35)] bg-[color:rgb(var(--accent)/0.12)] text-[color:rgb(var(--accent))] backdrop-blur-sm transition hover:bg-[color:rgb(var(--accent)/0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)] md:right-10 md:top-9"
+                  aria-label="关闭"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    className="block"
+                  >
+                    <path
+                      d="M6 6l12 12M18 6l-12 12"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                <div className="max-h-[calc(100svh-56px)] overflow-y-auto overscroll-contain p-8 md:p-12">
+                  <div className="space-y-3 pr-24">
                     <p className="text-xs uppercase tracking-[0.3em] text-muted">
                       About
                     </p>
@@ -660,60 +684,25 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
                       {activeAboutDetail.subtitle}
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setActiveAbout(null)}
-                    className="inline-flex items-center justify-center rounded-full border border-[color:rgb(var(--accent)/0.35)] bg-[color:rgb(var(--accent)/0.12)] text-[color:rgb(var(--accent))] transition hover:bg-[color:rgb(var(--accent)/0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--accent)/0.5)]"
-                    aria-label="关闭"
-                    style={{
-                      borderWidth: "1.5px",
-                      borderRadius: "9999px",
-                      width: "2.25rem",
-                      height: "2.25rem",
-                      minWidth: "2.25rem",
-                      minHeight: "2.25rem",
-                      padding: 0,
-                      flex: "0 0 auto",
-                      aspectRatio: "1 / 1"
-                    }}
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                      className="block"
-                    >
-                      <path
-                        d="M6 6l12 12M18 6l-12 12"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <div className="mt-6 space-y-4 text-sm text-[color:rgb(var(--fg))]">
-                  {activeAboutDetail.body.map((paragraph, index) => (
-                    <p key={`${activeAboutDetail.title}-${index}`}>{paragraph}</p>
-                  ))}
-                </div>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {activeAboutDetail.highlights.map((highlight) => (
-                    <span key={highlight} className="tag">
-                      {highlight}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {activeAboutDetail.tags.map((tag) => (
-                    <span key={tag} className="chip">
-                      {tag}
-                    </span>
-                  ))}
+                  <div className="mt-6 space-y-4 text-sm text-[color:rgb(var(--fg))]">
+                    {activeAboutDetail.body.map((paragraph, index) => (
+                      <p key={`${activeAboutDetail.title}-${index}`}>{paragraph}</p>
+                    ))}
+                  </div>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {activeAboutDetail.highlights.map((highlight) => (
+                      <span key={highlight} className="tag">
+                        {highlight}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {activeAboutDetail.tags.map((tag) => (
+                      <span key={tag} className="chip">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </m.div>
             </m.div>
