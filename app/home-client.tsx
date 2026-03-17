@@ -176,10 +176,8 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const [loading, setLoading] = useState(initialArticles.length === 0);
   const lastHash = useRef("");
   const lastFetchedAt = useRef(0);
-  const prefersReducedMotion = useReducedMotion();
-  const reduceMotion = prefersReducedMotion;
+  const reduceMotion = useReducedMotion();
   const motionEnabled = true;
-  const [isMobile, setIsMobile] = useState(false);
   const containerVariant = motionEnabled ? container : undefined;
   const floatDistance = reduceMotion ? 0 : 10;
   const hoverLift = reduceMotion ? 0 : 8;
@@ -206,31 +204,6 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
   const [activeAbout, setActiveAbout] = useState<number | null>(null);
   const activeAboutDetail =
     activeAbout === null ? null : aboutDetails[activeAbout] ?? null;
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const query = window.matchMedia("(max-width: 640px)");
-    const update = () => setIsMobile(query.matches);
-    update();
-
-    type LegacyMediaQueryList = MediaQueryList & {
-      addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
-      removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
-    };
-
-    const onChange = (_event?: MediaQueryListEvent) => update();
-
-    if (typeof query.addEventListener === "function") {
-      query.addEventListener("change", onChange);
-      return () => query.removeEventListener("change", onChange);
-    }
-
-    const legacy = query as LegacyMediaQueryList;
-    if (typeof legacy.addListener === "function") {
-      legacy.addListener(onChange);
-      return () => legacy.removeListener?.(onChange);
-    }
-  }, []);
 
   useEffect(() => {
     let active = true;
