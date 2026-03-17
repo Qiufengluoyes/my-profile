@@ -384,7 +384,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
               </div>
             </m.div>
             <m.div
-              className="pointer-events-none absolute bottom-14 inset-x-0 flex flex-col items-center justify-center gap-2 text-xs text-muted"
+              className="pointer-events-none absolute bottom-8 inset-x-0 flex flex-col items-center justify-center gap-2 text-xs text-muted md:bottom-14"
               initial={motionEnabled ? { opacity: 0 } : false}
               animate={
                 reduceMotion
@@ -558,7 +558,7 @@ export default function HomeClient({ initialArticles }: HomeClientProps) {
               className="card p-8 md:p-10"
               initial={motionEnabled ? { opacity: 0, y: 16 } : false}
               whileInView={motionEnabled ? { opacity: 1, y: 0 } : undefined}
-              viewport={motionEnabled ? { once: true, amount: 0.4 } : undefined}
+              viewport={motionEnabled ? { once: true, amount: 0.01 } : undefined}
             >
               <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                 <div className="space-y-3">
